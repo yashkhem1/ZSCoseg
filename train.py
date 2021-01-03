@@ -6,6 +6,7 @@
 # Created:  _list-11-01
 # Modified by: Subhabrata Choudhury
 
+ # pylint: disable=no-value-for-parameter
 from __future__ import absolute_import, division, print_function
 
 import pickle
@@ -107,7 +108,7 @@ def main(config, cuda, excludeval,  embedding, continue_from, nolog, inputmix, i
     #print(values)
 
     #in case you want to save to the location of script you're running
-    datadir = os.path.join('data/datasets', imagedataset)
+    datadir = os.path.join('/home/SharedData/omkar/zscoseg/yash_manas/data/datasets', imagedataset)
     if not nolog:
         #name the savedir, might add logs/ before the datetime for clarity
         if experimentid is None:
@@ -379,6 +380,7 @@ def main(config, cuda, excludeval,  embedding, continue_from, nolog, inputmix, i
             loss.backward()
 
             iter_loss += float(loss)
+            del data,target,outputs
 
         #print(iter_loss)
         pbar.set_postfix(loss = "%.3f" % iter_loss)
@@ -443,6 +445,9 @@ def main(config, cuda, excludeval,  embedding, continue_from, nolog, inputmix, i
                         },
                         osp.join(savepath, "checkpoint_current.pth.tar"),
                     )
+        
+        torch.cuda.empty_cache()
+
 
     if not nolog:
         if continue_from is not None:

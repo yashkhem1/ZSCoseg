@@ -1,5 +1,5 @@
 DATASET: LoaderZLS
-ROOT: data/datasets/cocostuff/dataset
+ROOT: /home/SharedData/omkar/zscoseg/yash_manas/data/datasets/cocostuff/dataset
 VAL_SIZE: 2000
 
 IMAGE:

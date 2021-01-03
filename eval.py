@@ -6,6 +6,7 @@
 # Created:  2017-11-03
 # Modified by: Subhabrata Choudhury
 
+ # pylint: disable=no-value-for-parameter
 
 from __future__ import absolute_import, division, print_function
 import sys
@@ -44,6 +45,7 @@ import timeit
 @click.option("--threshold", type=float)
 @click.option("--imagedataset", default='cocostuff')
 def main(config, excludeval, embedding,  model_path, run, cuda, crf, redo, imagedataset, threshold):
+    # pylint: disable=no-value-for-parameter
     pth_extn = '.pth.tar'
     if osp.isfile(model_path.replace(pth_extn,  "_" + run + ".json")) and not threshold and not redo:
         print("Already Done!")
@@ -67,7 +69,7 @@ def main(config, excludeval, embedding,  model_path, run, cuda, crf, redo, image
     CONFIG = Dict(yaml.load(open(config)))
 
     
-    datadir = os.path.join('data/datasets', imagedataset)
+    datadir = os.path.join('/home/SharedData/omkar/zscoseg/yash_manas/data/datasets', imagedataset)
     print("Split dir: ", datadir)
     savedir = osp.dirname(model_path)
     epoch = re.findall("checkpoint_(.*)\."+pth_extn[1:], osp.basename(model_path))[-1]

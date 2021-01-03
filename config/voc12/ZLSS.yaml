@@ -1,5 +1,5 @@
 DATASET: LoaderZLS
-ROOT: data/datasets/voc12/dataset
+ROOT: /home/SharedData/omkar/zscoseg/yash_manas/data/datasets/voc12/dataset
 IGNORE_LABEL: 255
 VAL_SIZE: 500
 
@@ -22,16 +22,16 @@ PYRAMIDS: [6, 12, 18, 24]
 
 # Training setting
 BATCH_SIZE:
-    TRAIN: 10
-    TEST: 10
+    TRAIN: 3
+    TEST: 5
 ITER_MAX: 20000
-ITER_SIZE: 1
+ITER_SIZE: 2
 ITER_SAVE: 30000
 ITER_TB: 100
 LR_DECAY: 10
 LR: 2.5e-4
 MOMENTUM: 0.9
-OPTIMIZER: sgd
+OPTIMIZER: adam
 POLY_POWER: 0.9
 WEIGHT_DECAY: 5.0e-4
 

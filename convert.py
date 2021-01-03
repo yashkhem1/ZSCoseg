@@ -5,6 +5,7 @@
 # URL:      http://kazuto1011.github.io
 # Created:  2017-11-15
 
+# pylint: disable=no-value-for-parameter
 from __future__ import absolute_import, division, print_function
 
 import re
@@ -132,21 +133,22 @@ def translate_layer_name(source):
     "--dataset", required=True, type=click.Choice(["voc12", "coco_init", "init"])
 )
 def main(dataset):
+    # pylint: disable=no-value-for-parameter
     WHITELIST = ["kernel_size", "stride", "padding", "dilation", "eps", "momentum"]
     CONFIG = {
         "voc12": {
-            "path_caffe_model": "data/models/deeplab_resnet101/voc12/train2_iter_20000.caffemodel",
-            "path_pytorch_model": "data/models/deeplab_resnet101/voc12/deeplabv2_resnet101_VOC2012.pth",
+            "path_caffe_model": "/home/SharedData/omkar/zscoseg/yash_manas/data/models/deeplab_resnet101/init/ResNet-101-model.caffemodel",
+            "path_pytorch_model": "data/models/deeplab_resnet101/init/deeplabv2_resnet101_VOC2012.pth",
             "n_classes": 21,
         },
         "coco_init": {
-            "path_caffe_model": "data/models/deeplab_resnet101/coco_init/init.caffemodel",
-            "path_pytorch_model": "data/models/deeplab_resnet101/coco_init/deeplabv2_resnet101_COCO_init.pth",
+            "path_caffe_model": "/home/SharedData/omkar/zscoseg/yash_manas/data/models/deeplab_resnet101/init/ResNet-101-model.caffemodel",
+            "path_pytorch_model": "data/models/deeplab_resnet101/init/deeplabv2_resnet101_COCO_init.pth",
             "n_classes": 91,
         },
         "init": {
             # The same as the coco_init parameters
-            "path_caffe_model": "data/models/deeplab_resnet101/init/deeplabv2_resnet101_init.caffemodel",
+            "path_caffe_model": "/home/SharedData/omkar/zscoseg/yash_manas/data/models/deeplab_resnet101/init/ResNet-101-model.caffemodel",
             "path_pytorch_model": "data/models/deeplab_resnet101/init/deeplabv2_resnet101_init.pth",
             "n_classes": 91,
         },
@@ -161,11 +163,14 @@ def main(dataset):
     state_dict = OrderedDict()
     for layer_name, layer_dict in params.items():
         for param_name, values in layer_dict.items():
-            if param_name in WHITELIST and dataset != "coco_init" and dataset != "init":
+            if param_name in WHITELIST and dataset!='voc12' and dataset != "coco_init" and dataset != "init":
                 attribute = translate_layer_name(layer_name)
                 attribute = eval("model." + attribute + "." + param_name)
                 if isinstance(attribute, tuple):
                     if attribute[0] != values:
+                        print(attribute)
+                        print(attribute[0])
+                        print(values)
                         raise ValueError
                 else:
                     if abs(attribute - values) > 1e-4:
